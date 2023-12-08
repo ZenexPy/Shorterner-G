@@ -1,0 +1,25 @@
+{% extends 'shorterner/base.html' %}
+{% load static %}
+
+{% block title %}Профиль{% endblock %}
+{% block content %}
+<div class="container">
+    <section class="mx-auto my-5" style="max-width: 23rem;">
+        
+      <div class="card testimonial-card mt-2 mb-3">
+        <div class="card-up aqua-gradient"></div>
+        <div class="avatar mx-auto white">
+          <img src="{% static 'shorterner/img/profile_img.png' %}"  width="200" height="200">
+        </div>
+        <div class="card-body text-center">
+          <h3 class="card-title font-weight-bold">{{ user.username }}</h3>
+          <hr>
+          <p><a href="#" class="btn btn-primary">Мои ссылки</a></p>
+          <p><a href="{% url 'edit_profile' %}" class="btn btn-primary">Редактировать профиль</a></p>
+          <p><a href="{% url 'logout' %}" class="btn btn-primary">Выйти из профиля</a></p>
+        </div>
+      </div>
+      
+    </section>
+  </div>
+{% endblock %}

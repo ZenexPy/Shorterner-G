@@ -1,0 +1,161 @@
+:root {
+    --color1: #8c73ed;
+    --color2: #3acafb;
+}
+
+
+.h1-text {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2px;
+}
+
+body{
+    position: relative;
+    min-height: 100vh;
+}
+
+
+header,
+section {
+    padding: 100px 0;
+}
+
+header {
+    padding: 150px;
+}
+
+header {
+    background: url(../img/lowpoly.png) rgb(63, 94, 251);
+    background: url(../img/lowpoly.png) radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background-size: cover;
+}
+
+main{
+    flex-grow: 1;
+}
+
+
+
+.btn-itd {
+    overflow: hidden;
+    display: block;
+    width: 230px;
+    height: 30px;
+    border-radius: 5%;
+    margin: 0 auto;
+    margin-top: 50px;
+    color: var(--bs--white);
+    background-color: var(--bs-white);
+    font-style: italic;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+
+.btn-url{
+    margin: 0 auto;
+    display: block;
+    background-color : var(--color2);
+    border-color: var(--color2);
+}
+
+.input-url{
+    text-align: center;
+}
+
+.textcolor1 {
+    color: var(--color2);
+    font-weight: 700;
+}
+
+.about {
+    background-color: #edf5f7;
+}
+
+.about i {
+    font-size: 35px;
+    color: var(--color2)
+}
+
+.my_circle {
+    margin: 0 auto 15px;
+    width: 70px;
+    height: 70px;
+    border: 3px solid var(--color2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom_line {
+    width: 100px;
+    height: 3px;
+    background-color: var(--color1);
+    margin: 15px auto 30px;
+}
+
+.bottom_line1 {
+    width: 400px;
+    height: 3px;
+    background-color: var(--color1);
+    margin: 15px auto 30px;
+}
+
+.div-url{
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/*=============================================================== */
+
+.page_404{ padding:70px 0; padding-left: 200px; background:#fff; font-family: 'Arvo', serif;
+}
+
+.page_404  img{ width:100%;}
+
+.four_zero_four_bg{
+ 
+ background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+ }
+ 
+ 
+ .four_zero_four_bg h1{
+ font-size:80px;
+ }
+ 
+  .four_zero_four_bg h3{
+       font-size:80px;
+       }
+       
+       .link_404{      
+  color: #fff!important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;}
+  .contant_box_404{ margin-top:-50px;}
+
+.btn-nav{
+    background-color: white;
+    border-color: white;
+    color: black;
+}
+.btn-nav:hover{
+    background-color: black;
+    border-color: black;
+}
+
+.nav-new {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

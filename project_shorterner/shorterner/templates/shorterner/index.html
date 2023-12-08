@@ -1,0 +1,115 @@
+{% extends 'shorterner/base.html' %}
+{% block content %}
+<section class="about" id="info">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-center text-uppercase"> Для создания короткой URL используйте инструкцию ниже </h3>
+            </div>
+            <div class="col-12">
+                <div class="text-center"> 
+                    <h5 class="mt-3"> 1. Вставьте вашу ссылку в Поле для ввода ниже</h5>
+                    <h5 class="mt-4"> 2. Нажмите кнопку "Создать Короткий Url"</h5>
+                    <h5 class="mt-4"> 3. Скопируйте появившуюся ссылку и пользуйтесь</h5> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="point">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-center text-uppercase mb-5">Здесь ты сможешь получить свою ссылку!</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <!-- <div>
+                <p><label for="link" class="form-label">Поле для ввода Вашего Url</label></p>
+            <input type="text" name="link" class="form-control input-url" id="link" placeholder="Введи свой Url">
+            <div id="emailHelp" class="form-text text-center mb-2">Ваши конфиденциальные данные надёжно защищены!</div>
+        <div class="buttons">
+            <button type="submit" class="btn btn-success btn-itd:hover btn-url" id="shorten">Создать Короткий Url</button>
+        </div>
+        
+            <div class="div-url">
+                <h3 class="text-center">Ваша ссылка отобразится здесь</h3>
+                <div class="bottom_line1 div-url"></div>
+                <h2 class="text-center">localhost:8000/{{ form.cleaned_data.random_chars_url }}</h2>
+                <div class="bottom_line1"></div>
+            </div>
+        </div> -->
+        <h5 class="text-center mb-3">{{ object.original_url }}</h5>
+        <button type="submit" class="btn btn-success btn-itd:hover btn-url" id="shorten">Создать Короткий Url</button>
+        <div class="div-url">
+        </div>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="container">
+            <h3 class="text-center text-danger">{{ message }}!</h3>
+            <h5 class="text-center text-secondary"> Пожалуйста, перепроверьте вставленный URL и попробуйте снова</h5>
+        </div>
+        {% endfor %}
+        {% endif %}
+        </form>
+        
+    </div>
+</section>
+
+    <section class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-center text-uppercase mb-5">Наши преимущества</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-md-6 col-sm-12">
+                    <div class="my_circle"><i class="icon-rocket"></i></div>
+                    <h4 class="text-center">Скорость</h4>
+                    <h5 class="text-center">Наш сервис не заставит вас терять драгоценные минуты в ожидании. Сделаем всё быстро</h5>
+                    <div class="bottom_line"></div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12">
+                    <div class="my_circle"><i class="icon-star"></i></div>
+                    <h4 class="text-center">Надежность </h4>
+                    <h5 class="text-center">Путем каждодневного улучшения сервиса, мы добились прекрасного показателя надежности</h5>
+                    <div class="bottom_line"></div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12">
+                    <div class="my_circle"><i class="icon-envelope-open"></i></div>
+                    <h4 class="text-center">Обратная связь</h4>
+                    <h5 class="text-center">Мы всегда открыты для предложений. Почта для связи: qwerty@mail.ru</h5>
+                    <div class="bottom_line"></div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12">
+                    <div class="my_circle"><i class="icon-thumbs-up-alt"></i></div>
+                    <h4 class="text-center">Нет рекламы</h4>
+                    <h5 class="text-center">Своё уважение к Вам, мы проявляем отсутствием рекламы на нашем сайте</h5>
+                    <div class="bottom_line"></div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12">
+                    <div class="my_circle"><i class="icon-chart-line"></i></div>
+                    <h4 class="text-center">Развитие </h4>
+                    <h5 class="text-center">Заходите к нам почаще, может быть уже завтра появится новый функционал</h5>
+                    <div class="bottom_line"></div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12">
+                    <div class="my_circle"><i class="icon-money"></i></div>
+                    <h4 class="text-center">Бесплатно </h4>
+                    <h5 class="text-center">Вам не придется заплатить ни копейки, всё абсолютно прозрачно и бесплатно</h5>
+                    <div class="bottom_line"></div>
+                </div>
+                 
+            </div>
+        </div>
+    </section>
+
+    
+{% endblock %}
