@@ -82,7 +82,7 @@ def edit_profile(request):
     else:
         user_form = UserUpdateForm(instance=request.user)
 
-    data = {
+        data = {
         'form':user_form
-    }
-    return render(request, 'registration/edit_profile.html', data)
+        }
+        return render(request, 'registration/edit_profile.html', data)
