@@ -1,0 +1,22 @@
+{% extends 'shorterner/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} Восстановление пароля {% endblock %}
+
+{% block content %}
+<div class="container mb-5">
+    <h1 class="text-center text-uppercase mt-4">На данной страницы вы сможете восстановить пароль!</h1>
+    <div class="container">
+        <h4 class="text-center text-secondary">Для этого введите в поле почту, на которую зарегистрирован аккаунт</h4>
+    </div>
+</div>
+<form method="post">
+    <div class="container mt-5">
+        {% csrf_token %}
+        {{form|crispy}}
+        <center><button type="submit" class="btn btn-primary">Отправить письмо</button></center>
+        
+    </div>
+    </form>
+{% endblock %}

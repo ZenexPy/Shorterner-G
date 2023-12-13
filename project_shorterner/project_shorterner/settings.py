@@ -135,3 +135,16 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/shorterner/'
 
 LOGOUT_REDIRECT_URL = '/login/'
+
+
+#email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+EMAIL_HOST_USER = 'kirill.hovansky2020@yandex.ru'
+EMAIL_HOST_PASSWORD = 'zbhmeusxlcesqjkc'
+DEFAULT_FROM_EMAIL = 'kirill.hovansky2020@yandex.ru'
