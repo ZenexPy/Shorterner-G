@@ -10,5 +10,6 @@ urlpatterns = [
     path('edit_profile/password/',
          user_views.PasswordEditView.as_view(template_name='registration/change_password.html'), name='password_edit'),
     path('password_success/', user_views.password_success, name='password_success'),
+    path('profile/urls', user_views.user_urls, name='user_urls'),
     
 ]

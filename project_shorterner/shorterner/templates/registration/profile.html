@@ -14,7 +14,7 @@
         <div class="card-body text-center">
           <h3 class="card-title font-weight-bold">{{ user.username }}</h3>
           <hr>
-          <p><a href="#" class="btn btn-primary">Мои ссылки</a></p>
+          <p><a href="{% url 'user_urls' %}" class="btn btn-primary">Мои ссылки</a></p>
           <p><a href="{% url 'edit_profile' %}" class="btn btn-primary">Редактировать профиль</a></p>
           <p><a href="{% url 'password_edit' %}" class="btn btn-primary">Сменить пароль</a></p>
           <p><a href="{% url 'logout' %}" class="btn btn-primary">Выйти из профиля</a></p>

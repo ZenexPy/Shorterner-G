@@ -1,0 +1,25 @@
+{% extends 'shorterner/base.html' %}
+{% load static %}
+
+{% block title %} Мои ссылки {% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center text-uppercase text-secondary m-4">Мои ссылки</h1>
+  </div>
+<div class="container">
+    {% if urls %}
+    {% for u in urls %}
+    <ul class="list-group">
+        <li><h3><a href="{{u.original_url}}">{{ u.original_url}}</a> <br>
+            <h3 class="text-success">localhost:8000/{{u.short_url}}</h3>
+        </li>
+    </ul>
+        {% endfor %}
+    {% else %}
+    <h2 class="text-center">Ничего не найдено.</h2>
+    {% endif %}
+    
+    
+          
+  </div>
+{% endblock %}

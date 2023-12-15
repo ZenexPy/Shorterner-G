@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as v
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import logout
+from ..models import ShortURL
 
 
 
@@ -16,6 +17,11 @@ class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = 'shorterner/register.html'
     success_url = reverse_lazy('login')
+
+
+class PasswordEditView(v.PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('password_success')
 
 
 @login_required
@@ -45,6 +51,7 @@ def password_success(request):
     return render(request, 'registration/password_success.html', {})
 
 
-class PasswordEditView(v.PasswordChangeView):
-    form_class = PasswordChangeForm
-    success_url = reverse_lazy('password_success')
+def user_urls(request):
+    user = request.user
+    urls = ShortURL.objects.filter(url_owner=user)
+    return render(request, 'shorterner/my_urls.html', {'urls': urls})
