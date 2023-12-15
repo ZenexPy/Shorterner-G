@@ -48,21 +48,3 @@ def password_success(request):
 class PasswordEditView(v.PasswordChangeView):
     form_class = PasswordChangeForm
     success_url = reverse_lazy('password_success')
-
-
-
-class PasswordResetViewCustom(v.PasswordResetView):
-    template_name = 'reset_password/password_reset_form.html'
-    #subject_template_name = 'reset_password/password_reset_subject.txt'
-
-
-class PasswordDoneView(v.PasswordResetDoneView):
-    template_name = 'reset_password/password_done.html'
-
-
-class PasswordConfirmView(v.PasswordResetConfirmView):
-    template_name = 'reset_password/password_confirm.html'
-
-
-class PasswordResetComplete(v.PasswordResetCompleteView):
-    template_name = 'reset_password/password_complete.html'

@@ -48,9 +48,14 @@ def createShortUrl(request):
             r = re.compile(url_validation)
             if (re.search(r, original_website)):
                 d = datetime.now()
-                s = ShortURL(original_url=original_website,
-                             short_url=makeUniqueUrl(), created_at=d)
-                s.save()
+                if request.user.is_authenticated:
+                    s = ShortURL(original_url=original_website,
+                                short_url=makeUniqueUrl(), created_at=d, url_owner=request.user)
+                    s.save()
+                else:
+                    s = ShortURL(original_url=original_website,
+                                short_url=makeUniqueUrl(), created_at=d)
+                    s.save()
                 return render(request, 'shorterner/redirect.html', {'obj': s})
             else:
                 messages.error(request, f'Вы ввели неправильный URL')
