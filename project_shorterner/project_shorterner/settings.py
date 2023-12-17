@@ -148,3 +148,5 @@ EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'kirill.hovansky2020@yandex.ru'
 EMAIL_HOST_PASSWORD = 'zbhmeusxlcesqjkc'
 DEFAULT_FROM_EMAIL = 'kirill.hovansky2020@yandex.ru'
+
+AUTH_USER_MODEL = 'shorterner.User'
