@@ -1,0 +1,9 @@
+{% extends 'shorterner/base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center text-secondary">Ваша ссылка некорректна, залогиньтесь снова</h2>
+        <a href="{% url 'login' %}"></a>
+    </div>
+{% endblock content %}

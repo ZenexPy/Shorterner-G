@@ -1,22 +1,76 @@
 from typing import Any
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect
-from ..forms import RegisterUserForm, UserUpdateForm
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views import View
+from ..utils import send_email_for_verify
+from ..forms import RegisterUserForm, UserUpdateForm, AuthenticationFormCustom
 from django.contrib import messages
-from django.views.generic import CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as v
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, get_user_model, login
 from ..models import ShortURL
+from django.utils.http import urlsafe_base64_decode
+from django.core.exceptions import ValidationError
+from django.contrib.auth.tokens import default_token_generator as \
+    token_generator
+
+
+User = get_user_model()
 
 
 
-class RegisterUser(CreateView):
-    form_class = RegisterUserForm
+class RegisterUser(View):
     template_name = 'shorterner/register.html'
-    success_url = reverse_lazy('login')
+
+    def get(self, request):
+        context = {
+            'form': RegisterUserForm()
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = RegisterUserForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            send_email_for_verify(request, user)
+            return redirect('confirm_email')
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
+
+
+class LoginViewCustom(v.LoginView):
+    form_class = AuthenticationFormCustom
+
+
+class EmailVerify(View):
+    def get(self, request, uidb64, token):
+        user = self.get_user(uidb64)
+
+        if user is not None and token_generator.check_token(user, token):
+            user.is_email_verified = True
+            user.save()
+            login(request, user)
+            return redirect('index')
+        return redirect('invalid_verify')
+
+    @staticmethod
+    def get_user(uidb64):
+        try:
+            # urlsafe_base64_decode() decodes to bytestring
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError,
+                User.DoesNotExist, ValidationError):
+            user = None
+        return user
 
 
 class PasswordEditView(v.PasswordChangeView):
