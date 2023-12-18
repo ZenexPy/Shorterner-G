@@ -30,21 +30,6 @@
         <form action="" method="POST">
             {% csrf_token %}
             {{ form.as_p}}
-            <!-- <div>
-                <p><label for="link" class="form-label">Поле для ввода Вашего Url</label></p>
-            <input type="text" name="link" class="form-control input-url" id="link" placeholder="Введи свой Url">
-            <div id="emailHelp" class="form-text text-center mb-2">Ваши конфиденциальные данные надёжно защищены!</div>
-        <div class="buttons">
-            <button type="submit" class="btn btn-success btn-itd:hover btn-url" id="shorten">Создать Короткий Url</button>
-        </div>
-        
-            <div class="div-url">
-                <h3 class="text-center">Ваша ссылка отобразится здесь</h3>
-                <div class="bottom_line1 div-url"></div>
-                <h2 class="text-center">localhost:8000/{{ form.cleaned_data.random_chars_url }}</h2>
-                <div class="bottom_line1"></div>
-            </div>
-        </div> -->
         <h5 class="text-center mb-3">{{ object.original_url }}</h5>
         <button type="submit" class="btn btn-success btn-itd:hover btn-url" id="shorten">Создать Короткий Url</button>
         <div class="div-url">
