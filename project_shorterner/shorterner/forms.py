@@ -28,6 +28,8 @@ class RegisterUserForm(UserCreationForm):
 
 
 class AuthenticationFormCustom(AuthenticationForm):
+
+
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
@@ -38,10 +40,11 @@ class AuthenticationFormCustom(AuthenticationForm):
                 username=username,
                 password=password,
             )
+
             if not self.user_cache.is_email_verified:
                 send_email_for_verify(self.request, self.user_cache)
                 raise ValidationError(
-                    'Email not verify, check your email',
+                    'Ваш e-mail не верифицирован, пожалуйста проверьте свою почту!',
                     code='invalid_login',
                 )
 

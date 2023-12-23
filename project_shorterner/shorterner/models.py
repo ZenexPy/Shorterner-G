@@ -10,6 +10,10 @@ class ShortURL(models.Model):
     created_at = models.DateTimeField(null=True)
     url_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
 
+    class Meta:
+        verbose_name = 'Короткая ссылка'
+        verbose_name_plural = 'Короткие ссылки'
+
     def __str__(self) -> str:
         return self.original_url
     
