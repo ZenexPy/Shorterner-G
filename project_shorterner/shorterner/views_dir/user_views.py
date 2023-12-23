@@ -42,6 +42,13 @@ class RegisterUser(View):
                         'error_message': 'Этот e-mail уже зарегистрирован и верифицирован'\
                     }
                     return render(request, self.template_name, context)
+                else:
+                    form.save()
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=password)
+                send_email_for_verify(request, user)
+                return redirect('confirm_email')
             else:
                 form.save()
                 username = form.cleaned_data.get('username')
