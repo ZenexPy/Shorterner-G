@@ -1,13 +1,38 @@
 {% extends 'shorterner/base.html' %}
-
+{% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="{% static 'shorterner/css/copy_button.css' %}">
     <center>
         <h4 class="text-center">Ваша оригинальная ссылка:</h4>
         <h6 class="text-center">"{{ obj.original_url }}"</h6>
         <div class="bottom_line1 div-url"></div>
         <h3>Ваша короткая ссылка:</h3>
-        <h2>localhost:8000/{{ obj.short_url }}</h2>
+        <div class="copy-link">
+            <input type="text" class="copy-link-input mb-4" value="localhost:8000/{{ obj.short_url }}" readonly>
+            <button type="button" class="copy-link-button">
+                <span class="material-symbols-outlined">copy_all</span>
+            </button>
+          </div>
         <a href="{{ obj.original_url }}"><button type="button" class="btn btn-primary">Перейти на сайт</button></a>
+        <script>
+            document.querySelectorAll(".copy-link").forEach((copyLinkParent) => {
+            const inputField = copyLinkParent.querySelector(".copy-link-input");
+            const copyButton = copyLinkParent.querySelector(".copy-link-button");
+            const text = inputField.value;
+
+            inputField.addEventListener("focus", () => inputField.select());
+
+            copyButton.addEventListener("click", () => {
+            inputField.select();
+            navigator.clipboard.writeText(text);
+
+            inputField.value = "Ссылка скопирована!";
+            setTimeout(() => (inputField.value = text), 1250);
+  });
+});
+
+        </script>
     </center>
 {% endblock content %}

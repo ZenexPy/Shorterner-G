@@ -3,8 +3,8 @@ import string
 import re
 
 
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse, reverse_lazy
 from ..models import ShortURL
 from django.http import HttpResponseRedirect
 from ..forms import FormAddUrl
@@ -50,13 +50,18 @@ def createShortUrl(request):
                 d = datetime.now()
                 if request.user.is_authenticated:
                     s = ShortURL(original_url=original_website,
-                                short_url=makeUniqueUrl(), created_at=d, url_owner=request.user)
+                                 short_url=makeUniqueUrl(), created_at=d, url_owner=request.user)
                     s.save()
+                    obj_id = s.pk
+                    redirect_url = reverse_lazy('redirect_page', args=(obj_id, ))
+                    return HttpResponseRedirect(redirect_url)
                 else:
                     s = ShortURL(original_url=original_website,
-                                short_url=makeUniqueUrl(), created_at=d)
+                                 short_url=makeUniqueUrl(), created_at=d)
                     s.save()
-                return render(request, 'shorterner/redirect.html', {'obj': s})
+                    obj_id = s.pk
+                    redirect_url = reverse_lazy('redirect_page', args=(obj_id, ))
+                    return HttpResponseRedirect(redirect_url)
             else:
                 messages.error(request, f'Вы ввели неправильный URL')
                 return HttpResponseRedirect(reverse_lazy('index'))
@@ -64,3 +69,8 @@ def createShortUrl(request):
         form = FormAddUrl()
         context = {'form': form}
         return render(request, 'shorterner/index.html', context)
+
+
+def redirect_page(request, obj_id):
+    obj = get_object_or_404(ShortURL, pk=obj_id)
+    return render(request, 'shorterner/redirect.html', {'obj': obj})
