@@ -30,7 +30,6 @@
         <form action="" method="POST">
             {% csrf_token %}
             {{ form.as_p}}
-        <h5 class="text-center mb-3">{{ object.original_url }}</h5>
         <button type="submit" class="btn btn-success btn-itd:hover btn-url" id="shorten">Создать Короткий Url</button>
         <div class="div-url">
         </div>

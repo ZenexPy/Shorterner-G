@@ -1,0 +1,37 @@
+.copy-link {
+    --height: 34px;
+  
+    display: flex;
+    max-width: 280px;
+  }
+  
+  .copy-link-input {
+    flex-grow: 1;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid #cccccc;
+    border-right: none;
+    outline: none;
+  }
+  
+  .copy-link-input:hover {
+    background: #eeeeee;
+  }
+  
+  .copy-link-button {
+    flex-shrink: 0;
+    width: var(--height);
+    height: var(--height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dddddd;
+    color: #333333;
+    outline: none;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+  }
+  
+  .copy-link-button:hover {
+    background: #cccccc;
+  }
