@@ -49,7 +49,7 @@ class RegisterUser(View):
                 if user_query.filter(is_email_verified=True).exists():
                     context = {
                         'form': form,
-                        'error_message': 'Этот e-mail уже зарегистрирован и верифицирован'\
+                        'error_message': 'Этот e-mail уже зарегистрирован и верифицирован',
                     }
                     return render(request, self.template_name, context)
                 else:
