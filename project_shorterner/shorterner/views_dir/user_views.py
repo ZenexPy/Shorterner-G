@@ -3,7 +3,6 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
-from ..utils import send_email_for_verify
 from ..forms import RegisterUserForm, UserUpdateForm, AuthenticationFormCustom
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -15,24 +14,24 @@ from django.utils.http import urlsafe_base64_decode
 from django.core.exceptions import ValidationError
 from django.contrib.auth.tokens import default_token_generator as \
     token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from ..tasks import send_email
 
 
 User = get_user_model()
 
 
-
 class RegisterUser(View):
     template_name = 'shorterner/register.html'
 
-
     def save_user_data(self, form, request):
-        form.save()
+        user = form.save()
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
-        send_email_for_verify(request, user)
+        domain = get_current_site(request).domain
+        send_email.delay(user.id, domain)
         return redirect('confirm_email')
-
 
     def get(self, request):
         context = {
@@ -58,9 +57,9 @@ class RegisterUser(View):
                 return self.save_user_data(form, request)
         else:
             context = {
-            'form': form
+                'form': form
             }
-            return render(request, self.template_name, context)           
+            return render(request, self.template_name, context)
 
 
 class LoginViewCustom(v.LoginView):
