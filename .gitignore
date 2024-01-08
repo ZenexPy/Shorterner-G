@@ -16,7 +16,7 @@ migrations/*
 
 # Distribution / packaging
 .Python
-.env/
+.project_shorterner/.env
 build/
 develop-eggs/
 dist/
