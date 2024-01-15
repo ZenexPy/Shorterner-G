@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    container_name: shorterner_postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=shorterner_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=PGPASSWORD
+    ports:
+      - 5432:5432
+      
+
+  project_shorterner:
+    build: .
+    container_name: shorterner_project
+    command: python /usr/src/project_shorterner/manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/project_shorterner
+    ports:
+      - 8000:8000
+
+  redis:
+    image: redis:7.0.11-alpine
+    ports:
+      - 6379:6379
+
+  celery:
+    container_name: celery
+    build: .
+    volumes:
+      - .:/usr/src/project_shorterner
+    command: celery -A project_shorterner worker --loglevel=INFO --pool=eventlet & celery -A project_shorterner beat -l INFO
+    depends_on:
+      - redis
+    links:
+      - redis
+    env_file:
+      - .env
+volumes:
+  postgres_data:

@@ -2,34 +2,35 @@ from django import forms
 from .models import ShortURL
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model, authenticate
-from .utils import send_email_for_verify
 from django.core.exceptions import ValidationError
+from django.contrib.sites.shortcuts import get_current_site
+from .tasks import send_email
+
 
 class FormAddUrl(forms.ModelForm):
     class Meta:
         model = ShortURL
         fields = ['original_url']
-        widgets ={
-            'original_url': forms.TextInput(attrs={'class':'form-control'})
+        widgets = {
+            'original_url': forms.TextInput(attrs={'class': 'form-control'})
         }
-        labels = {'original_url':'Поле для ввода Вашего Url'}
+        labels = {'original_url': 'Поле для ввода Вашего Url'}
+
 
 class RegisterUserForm(UserCreationForm):
     email = forms.EmailField()
-
 
     class Meta:
         model = get_user_model()
         fields = ('username', 'password1', 'password2', 'email')
         widgets = {
-            'username': forms.TextInput(attrs={'class':'form-control'}),
-            'password1': forms.PasswordInput(attrs={'class':'form-input'}),
-            'password2': forms.PasswordInput(attrs={'class':'form-input'})
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-input'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-input'})
         }
 
 
 class AuthenticationFormCustom(AuthenticationForm):
-
 
     def clean(self):
         username = self.cleaned_data.get('username')
@@ -46,7 +47,8 @@ class AuthenticationFormCustom(AuthenticationForm):
                 raise self.get_invalid_login_error()
 
             if not self.user_cache.is_email_verified:
-                send_email_for_verify(self.request, self.user_cache)
+                domain = get_current_site(self.request).domain
+                send_email.delay(self.user_cache.id, domain)
                 raise ValidationError(
                     'Ваш e-mail не верифицирован, пожалуйста проверьте свою почту!',
                     code='invalid_login',
@@ -59,7 +61,7 @@ class AuthenticationFormCustom(AuthenticationForm):
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
-    
+
     class Meta:
         model = get_user_model()
         fields = ('username', 'email')
