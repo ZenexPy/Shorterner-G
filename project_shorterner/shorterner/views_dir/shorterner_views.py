@@ -36,6 +36,8 @@ def redirect(request, url):
         current_obj = ShortURL.objects.get(short_url=url)
     except ObjectDoesNotExist:
         return render(request, 'shorterner/pagenotfound.html')
+    current_obj.redirect_count += 1
+    current_obj.save()
     original_url = current_obj.original_url
     return HttpResponseRedirect(original_url)
 
