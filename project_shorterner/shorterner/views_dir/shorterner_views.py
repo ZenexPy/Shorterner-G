@@ -2,7 +2,8 @@ import random
 import string
 import re
 
-
+from dateutil.relativedelta import relativedelta
+from django.utils import timezone
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from ..models import ShortURL
@@ -48,16 +49,17 @@ def createShortUrl(request):
             r = re.compile(url_validation)
             if (re.search(r, original_website)):
                 d = datetime.now()
+                expiration_date = timezone.now() + relativedelta(months=1)
                 if request.user.is_authenticated:
                     s = ShortURL(original_url=original_website,
-                                 short_url=makeUniqueUrl(), created_at=d, url_owner=request.user)
+                                 short_url=makeUniqueUrl(), created_at=d, url_owner=request.user, expiration_date=expiration_date)
                     s.save()
                     obj_id = s.pk
                     redirect_url = reverse_lazy('redirect_page', args=(obj_id, ))
                     return HttpResponseRedirect(redirect_url)
                 else:
                     s = ShortURL(original_url=original_website,
-                                 short_url=makeUniqueUrl(), created_at=d)
+                                 short_url=makeUniqueUrl(), created_at=d, expiration_date=expiration_date)
                     s.save()
                     obj_id = s.pk
                     redirect_url = reverse_lazy('redirect_page', args=(obj_id, ))

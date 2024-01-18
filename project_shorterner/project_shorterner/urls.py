@@ -4,6 +4,7 @@ from shorterner.views import *
 
 urlpatterns = [
     path('shorterner/', include('shorterner.urls')),
+    path('api/', include('shorterner_api.urls')),
     path('login/', user_views.LoginViewCustom.as_view(), name='login'),
     path("password_reset/", auth_views.PasswordResetView.as_view(template_name='reset_password/password_reset_form.html'), name="password_reset"),
     path("password_reset/done/",auth_views.PasswordResetDoneView.as_view(template_name='reset_password/password_done.html'),name="password_reset_done"),

@@ -38,7 +38,7 @@ services:
     build: .
     volumes:
       - .:/usr/src/project_shorterner
-    command: celery -A project_shorterner worker --loglevel=INFO --pool=eventlet & celery -A project_shorterner beat -l INFO
+    command: sh -c "celery -A project_shorterner beat -l INFO && celery -A project_shorterner worker --loglevel=INFO --pool=eventlet"
     depends_on:
       - redis
     links:

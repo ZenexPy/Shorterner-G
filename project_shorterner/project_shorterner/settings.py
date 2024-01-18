@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'shorterner.apps.ShorternerConfig',
     'django_celery_beat',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
