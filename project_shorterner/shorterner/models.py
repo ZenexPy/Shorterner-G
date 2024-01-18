@@ -12,6 +12,7 @@ class ShortURL(models.Model):
     created_at = models.DateTimeField(null=True)
     url_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     expiration_date = models.DateTimeField(null=True, blank=True)
+    redirect_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = 'Короткая ссылка'

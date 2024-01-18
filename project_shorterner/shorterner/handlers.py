@@ -3,4 +3,4 @@ from django.urls import reverse_lazy
 
 
 def custom_404(request, exception):
-    return HttpResponseRedirect(reverse_lazy('index'))
+    return HttpResponseRedirect(reverse_lazy('page_not_found'))
