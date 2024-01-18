@@ -10,5 +10,5 @@ urlpatterns = [
     path('redirect/<int:obj_id>/', shorterner_views.redirect_page, name='redirect_page'),
     path('users/', include('shorterner.urls_user')),
     path('page_not_found/', TemplateView.as_view(template_name='shorterner/pagenotfound.html'), name='page_not_found'),
-    path('', shorterner_views.createShortUrl, name='index'),
+    path('', shorterner_views.index, name='index'),
 ]
