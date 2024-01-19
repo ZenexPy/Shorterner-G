@@ -41,4 +41,9 @@ def makeShortUrl(request, original_url):
         s.url_owner = request.user
         s.save()
         return s
-            
+    
+
+def makeShortUrlApi(original_url):
+
+    s = ShortURL(original_url=original_url, short_url=makeUniqueUrl(), created_at=created_at,  expiration_date=expiration_date)
+    return s    
