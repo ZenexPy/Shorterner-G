@@ -10,7 +10,7 @@ class ShortURL(models.Model):
     original_url = models.CharField(max_length=700)
     short_url = models.CharField(max_length=100)
     created_at = models.DateTimeField(null=True)
-    url_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    url_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, default=None)
     expiration_date = models.DateTimeField(null=True, blank=True)
     redirect_count = models.PositiveIntegerField(default=0)
 
