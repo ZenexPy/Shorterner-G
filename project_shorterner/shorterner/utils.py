@@ -9,21 +9,22 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from django.contrib import messages
+from typing import List
 
 random_chars_list = list(string.ascii_letters+string.digits)
 url_validation = r"[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"
 
 
-def makeRandomList():
+def make_letters() -> List:
     string_chars = "".join(random.choices(random_chars_list, k=7))
     return string_chars
 
 
-def makeUniqueUrl():
-    random_short_url = makeRandomList()
+def make_unique_url() -> str:
+    random_short_url = make_letters()
 
     while len(ShortURL.objects.filter(short_url=random_short_url)) != 0:
-        random_short_url = makeRandomList()
+        random_short_url = make_letters()
     return random_short_url
 
 
@@ -34,16 +35,13 @@ def date_calculate():
 
 created_at, expiration_date = date_calculate()
 
-def makeShortUrl(request, original_url):
+def save_short_url(original_url: str):
     
-    s = ShortURL(original_url=original_url, short_url=makeUniqueUrl(), created_at=created_at,  expiration_date=expiration_date)
+    s = ShortURL(original_url=original_url, short_url=make_unique_url(), created_at=created_at,  expiration_date=expiration_date)
+    return s
+    
+
+def is_user_authenticated(request, new_url):
     if request.user.is_authenticated:
-        s.url_owner = request.user
-        s.save()
-        return s
-    
-
-def makeShortUrlApi(original_url):
-
-    s = ShortURL(original_url=original_url, short_url=makeUniqueUrl(), created_at=created_at,  expiration_date=expiration_date)
-    return s    
+        new_url.url_owner = request.user
+        return new_url

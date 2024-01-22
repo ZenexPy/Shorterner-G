@@ -7,7 +7,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('redirect/<int:obj_id>/', shorterner_views.redirect_page, name='redirect_page'),
+    path('redirect/<int:object_id>/', shorterner_views.redirect_page, name='redirect_page'),
     path('users/', include('shorterner.urls_user')),
     path('page_not_found/', TemplateView.as_view(template_name='shorterner/pagenotfound.html'), name='page_not_found'),
     path('', shorterner_views.index, name='index'),
