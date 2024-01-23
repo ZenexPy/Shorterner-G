@@ -32,13 +32,16 @@ def send_email(user_id, domain):
     )
     email.send()
 
+
 @shared_task
 def delete_expired_links():
-    expired_date = timezone.now()-relativedelta(month=1)
 
-    expired_links = ShortURL.objects.filter(created_at__lte=expired_date) #поменять на exp date
+    current_datetime = timezone.now()
+
+    expired_links = ShortURL.objects.filter(expiration_date__lte=current_datetime)
 
     expired_links.delete()
+
 
 app.conf.beat_schedule = {
     'task_exprired_links': {
